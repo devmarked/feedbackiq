@@ -5,18 +5,15 @@ import { Card } from '@/components/ui/card'
 import Image from 'next/image'
 import { ShineBorder } from '@/components/magicui/shine-border'
 import { PulsatingButton } from '@/components/magicui/pulsating-button'
-import { DisclaimerModal, useFirstVisitModal } from '@/components/ui/disclaimer-modal'
+
 import Link from 'next/link'
 import { Highlighter } from "@/components/magicui/highlighter";
 import { WordRotate } from "@/components/magicui/word-rotate";
 import { Sparkles, Heart, Lightbulb, TrendingUp, Users, Calendar, Star } from 'lucide-react'
 
 export default function Home() {
-  const { isModalOpen, closeModal } = useFirstVisitModal()
-
   return (
     <div>
-      <DisclaimerModal isOpen={isModalOpen} onClose={closeModal} />
 
       {/* Hero Section */}
       <section className="py-20 px-6 bg-background">
