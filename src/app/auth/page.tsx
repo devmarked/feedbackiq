@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { LoginForm } from '@/components/auth/LoginForm'
 import { SignUpForm } from '@/components/auth/SignUpForm'
@@ -81,9 +82,11 @@ function AuthContent() {
         <div className="max-w-md w-full space-y-8">
           {/* Dobby Login Image */}
           <div className="text-center">
-            <img 
+            <Image 
               src="/images/logo-clean.png" 
               alt="FeedbackIQ Login" 
+              width={128}
+              height={128}
               className="mx-auto h-32 w-auto"
             />
           </div>
@@ -104,9 +107,11 @@ function AuthContent() {
       <div className="max-w-md w-full space-y-8">
         {/* Dobby Login Image */}
         <div className="text-center">
-          <img 
+          <Image 
             src="/images/logo-clean.png" 
             alt="FeedbackIQ Login" 
+            width={128}
+            height={128}
             className="mx-auto h-32 w-auto"
           />
         </div>

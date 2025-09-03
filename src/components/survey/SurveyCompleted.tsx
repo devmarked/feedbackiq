@@ -5,6 +5,7 @@ import { CheckCircle, Share2, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Survey } from '@/types'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface SurveyCompletedProps {
   survey: Survey
@@ -54,7 +55,7 @@ export function SurveyCompleted({ survey }: SurveyCompletedProps) {
         >
           <h1 className="text-4xl font-bold text-gray-900">Thank You!</h1>
           <p className="text-xl text-gray-600">
-            Your response to "{survey.title}" has been successfully submitted.
+            Your response to &ldquo;{survey.title}&rdquo; has been successfully submitted.
           </p>
         </motion.div>
 
@@ -68,9 +69,11 @@ export function SurveyCompleted({ survey }: SurveyCompletedProps) {
           >
             <div className="flex items-center justify-center space-x-4">
               {survey.businesses.logo_url && (
-                <img 
+                <Image 
                   src={survey.businesses.logo_url} 
                   alt={survey.businesses.name}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-lg"
                 />
               )}

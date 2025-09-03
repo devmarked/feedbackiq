@@ -99,6 +99,127 @@ const deleteSurvey = async (surveyId: string, onSuccess?: () => void) => {
   }
 }
 
+// ActionCell component to handle the actions column
+interface ActionCellProps {
+  survey: Survey
+  onSurveyDeleted?: () => void
+}
+
+const ActionCell: React.FC<ActionCellProps> = ({ survey, onSurveyDeleted }) => {
+  const [isDeleting, setIsDeleting] = React.useState(false)
+  const [showShareModal, setShowShareModal] = React.useState(false)
+
+  const handleDelete = async () => {
+    setIsDeleting(true)
+    const success = await deleteSurvey(survey.id, () => {
+      // Call the refresh callback if provided
+      if (onSurveyDeleted) {
+        onSurveyDeleted()
+      }
+    })
+    setIsDeleting(false)
+  }
+
+  return (
+    <div className="flex items-center space-x-2">
+      {survey.status === 'active' && (
+        <Link href={`/survey/${survey.id}`}>
+          <Button variant="outline" size="sm">
+            <Eye className="w-4 h-4 mr-1" />
+            View
+          </Button>
+        </Link>
+      )}
+      
+      <Link href={`/business/surveys/${survey.id}/edit`}>
+        <Button variant="outline" size="sm">
+          <Edit3 className="w-4 h-4 mr-1" />
+          Edit
+        </Button>
+      </Link>
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(survey.id)}
+          >
+            Copy survey ID
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          {survey.status === 'active' && (
+            <DropdownMenuItem onClick={() => setShowShareModal(true)}>
+              <Share2 className="w-4 h-4 mr-2" />
+              Share survey
+            </DropdownMenuItem>
+          )}
+          <Link href={`/business/surveys/${survey.id}/responses`}>
+            <DropdownMenuItem>
+              View responses
+            </DropdownMenuItem>
+          </Link>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem 
+                className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                onSelect={(e) => e.preventDefault()}
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete survey
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Survey</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete &quot;{survey.title}&quot;? This action cannot be undone.
+                  {survey.response_count > 0 && (
+                    <span className="block mt-2 text-amber-600 font-medium">
+                      ⚠️ This survey has {survey.response_count} response{survey.response_count !== 1 ? 's' : ''} that will also be deleted.
+                    </span>
+                  )}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                >
+                  {isDeleting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Deleting...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete Survey
+                    </>
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      <ShareSurveyModal
+        survey={survey}
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+      />
+    </div>
+  )
+}
+
 // Create columns function that accepts the callback
 const createColumns = (onSurveyDeleted?: () => void): ColumnDef<Survey>[] => [
   {
@@ -230,120 +351,10 @@ const createColumns = (onSurveyDeleted?: () => void): ColumnDef<Survey>[] => [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       const survey = row.original
-      const [isDeleting, setIsDeleting] = React.useState(false)
-      const [showShareModal, setShowShareModal] = React.useState(false)
-
-      const handleDelete = async () => {
-        setIsDeleting(true)
-        const success = await deleteSurvey(survey.id, () => {
-          // Call the refresh callback if provided
-          if (onSurveyDeleted) {
-            onSurveyDeleted()
-          }
-        })
-        setIsDeleting(false)
-      }
-
-      return (
-        <div className="flex items-center space-x-2">
-          {survey.status === 'active' && (
-            <Link href={`/survey/${survey.id}`}>
-              <Button variant="outline" size="sm">
-                <Eye className="w-4 h-4 mr-1" />
-                View
-              </Button>
-            </Link>
-          )}
-          
-          <Link href={`/business/surveys/${survey.id}/edit`}>
-            <Button variant="outline" size="sm">
-              <Edit3 className="w-4 h-4 mr-1" />
-              Edit
-            </Button>
-          </Link>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(survey.id)}
-              >
-                Copy survey ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              {survey.status === 'active' && (
-                <DropdownMenuItem onClick={() => setShowShareModal(true)}>
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share survey
-                </DropdownMenuItem>
-              )}
-              <Link href={`/business/surveys/${survey.id}/responses`}>
-                <DropdownMenuItem>
-                  View responses
-                </DropdownMenuItem>
-              </Link>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <DropdownMenuItem 
-                    className="text-red-600 focus:text-red-600 focus:bg-red-50"
-                    onSelect={(e) => e.preventDefault()}
-                  >
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    Delete survey
-                  </DropdownMenuItem>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Survey</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Are you sure you want to delete "{survey.title}"? This action cannot be undone.
-                      {survey.response_count > 0 && (
-                        <span className="block mt-2 text-amber-600 font-medium">
-                          ⚠️ This survey has {survey.response_count} response{survey.response_count !== 1 ? 's' : ''} that will also be deleted.
-                        </span>
-                      )}
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={handleDelete}
-                      disabled={isDeleting}
-                      className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
-                    >
-                      {isDeleting ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Deleting...
-                        </>
-                      ) : (
-                        <>
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete Survey
-                        </>
-                      )}
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <ShareSurveyModal
-            survey={survey}
-            isOpen={showShareModal}
-            onClose={() => setShowShareModal(false)}
-          />
-        </div>
-      )
+      
+      return <ActionCell survey={survey} onSurveyDeleted={onSurveyDeleted} />
     },
   },
 ]

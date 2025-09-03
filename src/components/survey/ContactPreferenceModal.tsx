@@ -97,7 +97,7 @@ export function ContactPreferenceModal({ open, onClose, onConfirm }: ContactPref
           )}
 
           <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
-            By continuing, you acknowledge: Privacy details are handled according to the survey creator's policy. If you provide an email, the survey creator may contact you for follow-up about this survey only.
+            By continuing, you acknowledge: Privacy details are handled according to the survey creator&apos;s policy. If you provide an email, the survey creator may contact you for follow-up about this survey only.
           </div>
         </div>
 

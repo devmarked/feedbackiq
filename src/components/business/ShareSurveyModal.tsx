@@ -105,7 +105,7 @@ export function ShareSurveyModal({ survey, isOpen, onClose }: ShareSurveyModalPr
             Share Survey
           </DialogTitle>
           <DialogDescription className="text-base">
-            Share "{survey.title}" with your audience using the QR code or direct link below.
+            Share &ldquo;{survey.title}&rdquo; with your audience using the QR code or direct link below.
           </DialogDescription>
         </DialogHeader>
         

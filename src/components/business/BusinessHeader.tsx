@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -80,10 +81,11 @@ export function BusinessHeader({ business }: BusinessHeaderProps) {
     >
       {/* Cover Image */}
       <div className="absolute inset-0">
-        <img 
+        <Image 
           src="/images/building.jpg" 
           alt="Business Dashboard Banner"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-purple-900/70 to-teal-900/70" />
       </div>
@@ -109,10 +111,12 @@ export function BusinessHeader({ business }: BusinessHeaderProps) {
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
               {business?.logo_url ? (
-                <img 
+                <Image 
                   src={business.logo_url} 
                   alt={`${business.name} logo`}
-                  className="w-16 h-16 rounded-lg object-cover"
+                  width={64}
+                  height={64}
+                  className="rounded-lg object-cover"
                 />
               ) : (
                 <Building2 className="w-10 h-10 text-white" />

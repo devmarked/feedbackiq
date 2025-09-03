@@ -35,6 +35,10 @@ export default function SurveyResponsePage() {
             settings,
             status,
             business_id,
+            response_count,
+            created_by,
+            created_at,
+            updated_at,
             businesses (
               name,
               logo_url

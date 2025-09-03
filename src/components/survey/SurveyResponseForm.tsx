@@ -10,6 +10,7 @@ import { SurveyQuestionRenderer } from './SurveyQuestionRenderer'
 import { supabase } from '@/lib/supabase'
 import { ContactPreferenceModal } from './ContactPreferenceModal'
 import type { ContactPreference } from './ContactPreferenceModal'
+import Image from 'next/image'
 
 interface SurveyResponseFormProps {
   survey: Survey
@@ -172,7 +173,7 @@ export function SurveyResponseForm({ survey, onComplete }: SurveyResponseFormPro
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">No Questions Available</h2>
-          <p className="text-gray-600">This survey doesn't have any questions yet.</p>
+          <p className="text-gray-600">This survey doesn&apos;t have any questions yet.</p>
         </div>
       </div>
     )
@@ -222,9 +223,11 @@ export function SurveyResponseForm({ survey, onComplete }: SurveyResponseFormPro
                 >
                   <div className="flex items-center mb-4">
                     {survey.businesses?.logo_url && (
-                      <img 
+                      <Image 
                         src={survey.businesses.logo_url} 
                         alt={survey.businesses.name}
+                        width={48}
+                        height={48}
                         className="w-12 h-12 rounded-lg mr-4"
                       />
                     )}

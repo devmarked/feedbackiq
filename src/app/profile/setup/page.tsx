@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { useProfile } from '@/contexts/ProfileContext'
 import { Button } from '@/components/ui/button'
@@ -179,16 +180,18 @@ export default function ProfileSetupPage() {
       <div className="max-w-md w-full space-y-8">
         {/* Welcome Header */}
         <div className="text-center">
-          <img 
+          <Image 
             src="/images/logo-clean.png" 
             alt="Welcome to FeedbackIQ" 
+            width={128}
+            height={128}
             className="mx-auto h-32 w-auto"
           />
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
             Welcome to FeedbackIQ!
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Let's set up your business profile to get started
+            Let&apos;s set up your business profile to get started
           </p>
         </div>
 

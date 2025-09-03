@@ -286,7 +286,7 @@ export default function SurveyResponsesPage() {
                 <Sparkles className="w-5 h-5 text-green-600" />
                 <div>
                   <h3 className="font-semibold text-green-800">AI Insights Available</h3>
-                  <p className="text-sm text-green-600">Click "View AI Insights" to see detailed analysis</p>
+                  <p className="text-sm text-green-600">Click &quot;View AI Insights&quot; to see detailed analysis</p>
                 </div>
               </div>
               {savedInsight && (
