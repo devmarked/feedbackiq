@@ -19,16 +19,20 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
+            <div className="h-8 flex items-center justify-center">
               <Image 
-                src="/images/dobby.png" 
-                alt="Survey Platform Logo" 
-                width={32} 
+                src="/images/logo.svg" 
+                alt="FeedbackIQ Logo" 
+                width={120} 
                 height={32}
-                className="w-full h-full object-cover"
+                className="h-full w-auto antialiased"
+                style={{
+                  imageRendering: 'crisp-edges',
+                  shapeRendering: 'geometricPrecision'
+                }}
+                unoptimized
               />
             </div>
-            <span className="text-gray-900 font-mono text-lg font-semibold">FeedbackIQ</span>
           </Link>
 
           {/* Navigation */}

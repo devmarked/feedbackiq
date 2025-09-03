@@ -7,6 +7,9 @@ import { ShineBorder } from '@/components/magicui/shine-border'
 import { PulsatingButton } from '@/components/magicui/pulsating-button'
 import { DisclaimerModal, useFirstVisitModal } from '@/components/ui/disclaimer-modal'
 import Link from 'next/link'
+import { Highlighter } from "@/components/magicui/highlighter";
+import { WordRotate } from "@/components/magicui/word-rotate";
+import { Sparkles } from 'lucide-react'
 
 export default function Home() {
   const { isModalOpen, closeModal } = useFirstVisitModal()
@@ -18,94 +21,66 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-20 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center md:text-left">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          <div className="text-center">
+          <div className="mt-6 sm:mt-0 mb-12">
+              <div className="relative inline-block">
+                <Button 
+                  className="relative text-base px-2 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer-slide" 
+                       style={{
+                         background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                         backgroundSize: '200% 100%',
+                         animation: 'shimmer-slide 2s infinite linear'
+                       }}
+                  />
+                  <div className="relative z-10 flex items-center">
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    AI Powered
+                  </div>
+                </Button>
+              </div>
+            
+          </div>
+                          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
                 FeedbackIQ<br />
-                <span className="text-orange-600">for Business</span>
+                {"  "}for{"  "}
+                <span className="text-[white]">
+                  <WordRotate 
+                    words={[" Business ", " Restaurant ", " Software ", " Product ", " App "]} 
+                    duration={5000}
+                    className="font-bold"
+                    highlightColor="#25056f"
+                  />
+                </span>{" "}
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Create powerful surveys, collect valuable feedback, and grow your business with intelligent insights.
-              </p>
-              <div className="flex justify-center md:justify-start space-x-4">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              Create powerful surveys, collect valuable feedback, and grow your business with intelligent insights.
+            </p>
+
+            <div className="flex justify-center space-x-4 mb-12">
               <Link href="/auth">
-                <Button size="lg" className="bg-orange-600 hover:bg-orange-500 text-white">
+                <Button size="lg" className="bg-primary">
                   Start Your Business Account
                 </Button>
               </Link>
               <Button size="lg" variant="outline" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>
                 Learn more
               </Button>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="relative">
-                <Image
-                  src="/images/dashboard_banner.jpg"
-                  alt="FeedbackIQ Business Dashboard Preview"
-                  width={600}
-                  height={400}
-                  className="rounded-2xl shadow-2xl object-cover"
-                  priority
-                  unoptimized
-                />
-                <div className="absolute top-2 right-2">
-                  <PulsatingButton 
-                    className="bg-orange-500 hover:bg-orange-600 text-white text-xs px-2 py-1 rounded-md"
-                    pulseColor="#f97316"
-                    duration="2s"
-                  >
-                    @0xTNT888
-                  </PulsatingButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-16 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-              Everything Your Business Needs
-            </h2>
-            <p className="text-lg text-gray-600 mb-12">
-              Powerful survey tools designed specifically for businesses to collect, analyze, and act on customer feedback.
-            </p>
-            
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-orange-500 rounded"></div>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Survey Builder</h3>
-                <p className="text-sm text-gray-600">Create professional surveys with drag-and-drop simplicity</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-blue-500 rounded"></div>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Analytics Dashboard</h3>
-                <p className="text-sm text-gray-600">Get real-time insights and detailed analytics</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-green-500 rounded"></div>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Easy Sharing</h3>
-                <p className="text-sm text-gray-600">Share via QR codes, links, or embed on your website</p>
-              </div>
             </div>
             
-            <Link href="/auth">
-              <Button className="bg-orange-600 hover:bg-orange-500 text-white" size="lg">
-                Start Building Surveys
-              </Button>
-            </Link>
+            {/* App Screenshot */}
+            <div className="mb-8 flex justify-center">
+              <Image
+                src="/images/feedbackiq.png"
+                alt="FeedbackIQ App Screenshot"
+                width={800}
+                height={600}
+                className="rounded-2xl shadow-2xl object-contain max-w-full h-auto"
+                priority
+                unoptimized
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -226,7 +201,7 @@ export default function Home() {
                 ></textarea>
               </div>
               
-              <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-500 text-white">
+              <Button type="submit" className="w-full bg-primary text-white">
                 Send Feedback
               </Button>
             </form>
@@ -246,7 +221,7 @@ export default function Home() {
             </p>
             
             <Link href="/auth">
-              <Button size="lg" className="bg-orange-600 hover:bg-orange-500 text-white">
+              <Button size="lg" className="bg-primary text-white">
                 Create Your Business Account
               </Button>
             </Link>
