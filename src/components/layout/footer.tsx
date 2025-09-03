@@ -7,18 +7,22 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         {/* Logo in the middle */}
         <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <div className="h-8 flex items-center justify-center">
               <Image 
-                src="/images/dobby.png" 
-                alt="Dobby Logo" 
-                width={32} 
+                src="/images/logo.svg" 
+                alt="FeedbackIQ Logo" 
+                width={120} 
                 height={32}
-                className="w-full h-full object-cover"
+                className="h-full w-auto antialiased"
+                style={{
+                  imageRendering: 'crisp-edges',
+                  shapeRendering: 'geometricPrecision'
+                }}
+                unoptimized
               />
             </div>
-            <span className="text-gray-900 font-mono text-lg font-semibold">DobbyHub</span>
-          </div>
+          </Link>
         </div>
 
         {/* About and Privacy Policy links */}

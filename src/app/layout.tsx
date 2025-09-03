@@ -7,8 +7,8 @@ import { AppInitializer } from '@/components/AppInitializer'
 import { ConditionalLayout } from '@/components/ConditionalLayout'
 
 export const metadata: Metadata = {
-  title: 'DobbyHub - World\'s First Loyal and Most Free LLMs',
-  description: 'Chat with Dobby and explore community-built AI apps. World\'s First Loyal and Most Free LLMs.',
+  title: 'feedbackIQ - Smart Survey Platform for Business Insights',
+  description: 'Create, share, and analyze surveys with AI-powered insights. Transform feedback into actionable business intelligence.',
 }
 
 export default function RootLayout({
