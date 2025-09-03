@@ -69,7 +69,7 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
           <p className="text-gray-600 mb-6">
             We&apos;ve sent a password reset link to <strong>{email}</strong>
           </p>
-          <Button onClick={() => setResetPasswordSuccess(false)} variant="outline" className="w-full bg-orange-600 hover:bg-orange-500">
+          <Button onClick={() => setResetPasswordSuccess(false)} variant="outline" className="w-full bg-primary hover:bg-primary/90">
             Back to sign in
           </Button>
         </div>
@@ -123,7 +123,7 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
 
         <Button
           type="submit"
-          className="w-full bg-orange-600 hover:bg-orange-500 text-white"
+          className="w-full bg-primary hover:bg-primary/90 text-white"
           disabled={loading}
         >
           {loading ? 'Signing in...' : 'Sign in'}

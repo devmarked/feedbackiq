@@ -39,6 +39,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(session)
         setUser(session?.user ?? null)
         setLoading(false)
+
+        // Handle email verification redirect
+        if (event === 'SIGNED_IN' && session?.user) {
+          // Check if user's email is confirmed and they just verified it
+          if (session.user.email_confirmed_at && !session.user.user_metadata?.profile_setup_complete) {
+            // Use router.push instead of window.location.href for better integration
+            // The redirect will be handled by the auth page logic
+            console.log('User email confirmed, should redirect to profile setup')
+          }
+        }
       }
     )
 
@@ -57,6 +67,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/profile/setup`,
+      },
     })
     return { error }
   }

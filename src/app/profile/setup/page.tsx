@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { UserRoleType } from '@/types'
+import { createClient } from '@/lib/supabase/client'
 
 const countries = [
   'United States', 'Canada', 'United Kingdom', 'Germany', 'France', 'Italy', 'Spain',
@@ -20,6 +21,7 @@ export default function ProfileSetupPage() {
   const { user, loading: authLoading } = useAuth()
   const { profile, loading: profileLoading, updateProfile } = useProfile()
   const router = useRouter()
+  const supabase = createClient()
 
   const [formData, setFormData] = useState({
     username: '',
@@ -38,10 +40,31 @@ export default function ProfileSetupPage() {
   useEffect(() => {
     if (authLoading || profileLoading) return
 
+    console.log('Profile setup useEffect:', {
+      user: user?.email,
+      emailConfirmed: user?.email_confirmed_at,
+      profile: profile ? {
+        username: profile.username,
+        fullName: profile.full_name,
+        hasRequiredFields: profile.username !== null && profile.full_name !== null
+      } : null,
+      authLoading,
+      profileLoading
+    })
+
     // Add a small delay to prevent race conditions
     const timer = setTimeout(() => {
       // Redirect if not authenticated
       if (!user) {
+        console.log('No user, redirecting to auth')
+        setIsRedirecting(true)
+        router.push('/auth')
+        return
+      }
+
+      // Check if user's email is confirmed
+      if (!user.email_confirmed_at) {
+        console.log('Email not confirmed, redirecting to auth')
         setIsRedirecting(true)
         router.push('/auth')
         return
@@ -49,10 +72,13 @@ export default function ProfileSetupPage() {
 
       // If profile exists and has required fields, redirect to business setup
       if (profile && profile.username !== null && profile.full_name !== null) {
+        console.log('Profile complete, redirecting to business setup')
         setIsRedirecting(true)
         router.push('/business/setup')
         return
       }
+
+      console.log('Showing profile setup form')
 
       // Pre-fill form with existing profile data if available
       if (profile) {
@@ -64,7 +90,7 @@ export default function ProfileSetupPage() {
           role: profile.role || 'business',
         })
       }
-    }, 50)
+    }, 100)
 
     return () => clearTimeout(timer)
   }, [user, profile, authLoading, profileLoading, router])
@@ -105,6 +131,15 @@ export default function ProfileSetupPage() {
       if (error) {
         setError(error.message)
       } else {
+        // Mark profile setup as complete in user metadata
+        const { error: metadataError } = await supabase.auth.updateUser({
+          data: { profile_setup_complete: true }
+        })
+
+        if (metadataError) {
+          console.error('Error updating user metadata:', metadataError)
+        }
+
         // Redirect to business setup
         router.push('/business/setup')
       }
@@ -116,7 +151,7 @@ export default function ProfileSetupPage() {
   }
 
   // Show loading state while authentication/profile is loading or while redirecting
-  if (loading) {
+  if (loading && !user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -129,8 +164,13 @@ export default function ProfileSetupPage() {
     )
   }
 
-  // Don't render anything if user is not authenticated or profile is complete
-  if (!user || (profile && profile.username && profile.full_name)) {
+  // Don't render anything if user is not authenticated
+  if (!user) {
+    return null // Will redirect via useEffect
+  }
+
+  // Don't render if profile is complete
+  if (profile && profile.username && profile.full_name) {
     return null // Will redirect via useEffect
   }
 
@@ -140,8 +180,8 @@ export default function ProfileSetupPage() {
         {/* Welcome Header */}
         <div className="text-center">
           <img 
-            src="/images/dobby_hi.png" 
-            alt="Welcome to DobbyHub" 
+            src="/images/logo-clean.png" 
+            alt="Welcome to FeedbackIQ" 
             className="mx-auto h-32 w-auto"
           />
           <h2 className="mt-6 text-3xl font-bold text-gray-900">

@@ -25,7 +25,10 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
 
   const fetchProfile = async (forceRefresh = false) => {
+    console.log('fetchProfile called:', { user: user?.id, forceRefresh })
+    
     if (!user) {
+      console.log('No user, clearing profile')
       setProfile(null)
       setLoading(false)
       setLastUserId(null)
@@ -46,6 +49,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Set loading to true when we start fetching
+    console.log('Setting loading to true')
     setLoading(true)
 
     try {
@@ -57,6 +61,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
       if (error && error.code === 'PGRST116') {
         // Profile doesn't exist, create one
+        console.log('Creating new profile for user:', user.id)
         const { data: newProfile, error: createError } = await supabase
           .from('profiles')
           .insert([
@@ -67,7 +72,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
               country: null,
               avatar_url: null,
               bio: null,
-              role: 'user',
+              role: 'business',
             },
           ])
           .select()
@@ -76,6 +81,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
         if (createError) {
           console.error('Error creating profile:', createError)
         } else {
+          console.log('Profile created successfully:', newProfile)
           setProfile(newProfile)
           setLastFetchTime(now)
           setLastUserId(user.id)
@@ -90,6 +96,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error('Error in fetchProfile:', error)
     } finally {
+      console.log('Setting loading to false')
       setLoading(false)
     }
   }
@@ -171,9 +178,18 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    console.log('ProfileContext useEffect:', { 
+      userId: user?.id, 
+      lastUserId, 
+      hasProfile: !!profile 
+    })
+    
     // Only fetch if user changed or we don't have data yet
     if (user?.id !== lastUserId || !profile) {
+      console.log('Fetching profile due to user change or no profile')
       fetchProfile()
+    } else {
+      console.log('Skipping profile fetch')
     }
   }, [user?.id, lastUserId, profile])
 

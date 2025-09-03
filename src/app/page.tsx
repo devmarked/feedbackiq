@@ -9,7 +9,7 @@ import { DisclaimerModal, useFirstVisitModal } from '@/components/ui/disclaimer-
 import Link from 'next/link'
 import { Highlighter } from "@/components/magicui/highlighter";
 import { WordRotate } from "@/components/magicui/word-rotate";
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Heart, Lightbulb, TrendingUp, Users, Calendar, Star } from 'lucide-react'
 
 export default function Home() {
   const { isModalOpen, closeModal } = useFirstVisitModal()
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
                           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
                 FeedbackIQ<br />
-                {"  "}for{"  "}
+                {"  "}for your{"  "}
                 <span className="text-[white]">
                   <WordRotate 
                     words={[" Business ", " Restaurant ", " Software ", " Product ", " App "]} 
@@ -72,7 +72,7 @@ export default function Home() {
             {/* App Screenshot */}
             <div className="mb-8 flex justify-center">
               <Image
-                src="/images/feedbackiq.png"
+                src="/images/create-survey.png"
                 alt="FeedbackIQ App Screenshot"
                 width={800}
                 height={600}
@@ -100,7 +100,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-blue-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-blue-500 rounded"></div>
+                <Heart className="w-8 h-8 text-blue-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Customer Satisfaction</h3>
               <p className="text-sm text-gray-600 mb-4">Measure and improve customer satisfaction with targeted surveys</p>
@@ -108,7 +108,7 @@ export default function Home() {
 
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-green-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-green-500 rounded"></div>
+                <Lightbulb className="w-8 h-8 text-green-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Product Feedback</h3>
               <p className="text-sm text-gray-600 mb-4">Gather insights on your products and services to drive innovation</p>
@@ -116,7 +116,7 @@ export default function Home() {
 
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-purple-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-purple-500 rounded"></div>
+                <TrendingUp className="w-8 h-8 text-purple-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Market Research</h3>
               <p className="text-sm text-gray-600 mb-4">Understand your market and identify new opportunities</p>
@@ -124,7 +124,7 @@ export default function Home() {
 
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-orange-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-orange-500 rounded"></div>
+                <Users className="w-8 h-8 text-orange-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Employee Engagement</h3>
               <p className="text-sm text-gray-600 mb-4">Boost team morale with internal feedback and pulse surveys</p>
@@ -132,7 +132,7 @@ export default function Home() {
 
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-red-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-red-500 rounded"></div>
+                <Calendar className="w-8 h-8 text-red-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Event Feedback</h3>
               <p className="text-sm text-gray-600 mb-4">Collect feedback from events, workshops, and training sessions</p>
@@ -140,7 +140,7 @@ export default function Home() {
 
             <Card className="p-6 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-indigo-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <div className="w-8 h-8 bg-indigo-500 rounded"></div>
+                <Star className="w-8 h-8 text-indigo-500" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Brand Perception</h3>
               <p className="text-sm text-gray-600 mb-4">Monitor how your brand is perceived in the market</p>

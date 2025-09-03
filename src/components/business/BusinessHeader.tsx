@@ -99,7 +99,7 @@ export function BusinessHeader({ business }: BusinessHeaderProps) {
               className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
             >
               <Settings className="w-4 h-4 mr-2" />
-              Business Settings
+              Settings
             </Button>
           </Link>
         </div>

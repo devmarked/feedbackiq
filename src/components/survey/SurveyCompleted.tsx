@@ -105,23 +105,6 @@ export function SurveyCompleted({ survey }: SurveyCompletedProps) {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="space-y-3"
         >
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button 
-              variant="outline" 
-              onClick={handleShare}
-              className="flex-1"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share Survey
-            </Button>
-            
-            <Button asChild className="flex-1">
-              <Link href="/">
-                <Home className="w-4 h-4 mr-2" />
-                Visit DobbyHub
-              </Link>
-            </Button>
-          </div>
           
           <p className="text-xs text-gray-500">
             You can safely close this page now.

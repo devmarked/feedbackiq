@@ -27,10 +27,24 @@ function AuthContent() {
       return
     }
     
-    // If user is already logged in, redirect to business dashboard or setup
+    // If user is already logged in, check if they need profile setup
     if (!loading && user) {
+      console.log('User authenticated:', {
+        email: user.email,
+        emailConfirmed: user.email_confirmed_at,
+        profileSetupComplete: user.user_metadata?.profile_setup_complete
+      })
+      
       setIsRedirecting(true)
-      router.push('/business/setup')
+      
+      // Check if user's email is confirmed but profile setup is not complete
+      if (user.email_confirmed_at && !user.user_metadata?.profile_setup_complete) {
+        console.log('Redirecting to profile setup')
+        router.push('/profile/setup')
+      } else {
+        console.log('Redirecting to business setup')
+        router.push('/business/setup')
+      }
     }
   }, [user, loading, router, isRecoveryFlow])
 
@@ -68,8 +82,8 @@ function AuthContent() {
           {/* Dobby Login Image */}
           <div className="text-center">
             <img 
-              src="/images/dobby_login.png" 
-              alt="Dobby Login" 
+              src="/images/logo-clean.png" 
+              alt="FeedbackIQ Login" 
               className="mx-auto h-32 w-auto"
             />
           </div>
@@ -91,8 +105,8 @@ function AuthContent() {
         {/* Dobby Login Image */}
         <div className="text-center">
           <img 
-            src="/images/dobby_login.png" 
-            alt="Dobby Login" 
+            src="/images/logo-clean.png" 
+            alt="FeedbackIQ Login" 
             className="mx-auto h-32 w-auto"
           />
         </div>

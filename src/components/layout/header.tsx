@@ -54,11 +54,6 @@ export default function Header() {
               <div className="w-20 h-9 bg-gray-300 animate-pulse rounded"></div>
             ) : user ? (
               <div className="flex items-center space-x-4">
-                {userRole && (
-                  <Badge variant="secondary" className="text-xs">
-                    {getUserRoleLabel()}
-                  </Badge>
-                )}
                 <Link href="/profile">
                   <Button variant="outline" size="sm" className="border-gray-400 text-gray-700 hover:bg-gray-100/80 backdrop-blur-sm">
                     Profile
@@ -81,7 +76,7 @@ export default function Header() {
                   </Button>
                 </Link>
                 <Link href="/auth">
-                  <Button size="sm" className="bg-blue-600 hover:bg-blue-500 text-white">
+                  <Button size="sm" className="bg-primary hover:bg-primary/90 text-white">
                     Get started
                   </Button>
                 </Link>

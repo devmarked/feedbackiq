@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Calendar } from 'lucide-react'
 import { SurveyQuestion } from '@/types'
@@ -16,21 +16,35 @@ interface SurveyQuestionRendererProps {
 
 export function SurveyQuestionRenderer({ question, value, onChange }: SurveyQuestionRendererProps) {
   const [localValue, setLocalValue] = useState(value || '')
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Update local value when external value changes
   useEffect(() => {
     setLocalValue(value || '')
   }, [value])
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   // Handle text input changes with debouncing
   const handleTextChange = (newValue: string) => {
     setLocalValue(newValue)
-    // Debounce the onChange call
-    const timeoutId = setTimeout(() => {
+    
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    
+    // Set new timeout
+    timeoutRef.current = setTimeout(() => {
       onChange(newValue)
     }, 300)
-    
-    return () => clearTimeout(timeoutId)
   }
 
   const renderQuestionContent = () => {

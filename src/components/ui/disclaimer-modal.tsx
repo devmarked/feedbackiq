@@ -65,14 +65,14 @@ export function DisclaimerModal({ isOpen, onClose }: DisclaimerModalProps) {
           <div className="relative p-8 text-center">
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Welcome to DobbyHub
+                Welcome to FeedbackIQ
               </h2>
               
               {/* Dobby Hi Image */}
               <div className="flex justify-center mb-4">
                 <Image
-                  src="/images/dobby_hi.png"
-                  alt="Dobby waving hi"
+                  src="/images/logo-clean.png"
+                  alt="FeedbackIQ waving hi"
                   width={120}
                   height={120}
                   className="object-contain"
@@ -89,7 +89,7 @@ export function DisclaimerModal({ isOpen, onClose }: DisclaimerModalProps) {
             
             <Button 
               onClick={handleClose}
-              className="bg-orange-600 hover:bg-orange-500 text-white px-8 py-2 rounded-lg font-medium transition-colors"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-medium transition-colors"
             >
               Proceed
             </Button>

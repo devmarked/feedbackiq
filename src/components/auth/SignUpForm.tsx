@@ -160,7 +160,7 @@ export function SignUpForm({ onToggleMode }: SignUpFormProps) {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Check your email</h2>
           <p className="text-gray-600 mb-6">
-            We&apos;ve sent you a confirmation link at <strong>{email}</strong>. After confirming, you&apos;ll be able to set up your business profile.
+            We&apos;ve sent you a confirmation link at <strong>{email}</strong>. After confirming, you&apos;ll be redirected to complete your profile setup.
           </p>
           <Button onClick={onToggleMode} variant="outline" className="w-full">
             Back to sign in
@@ -231,7 +231,7 @@ export function SignUpForm({ onToggleMode }: SignUpFormProps) {
 
         <Button
           type="submit"
-          className="w-full bg-orange-600 hover:bg-orange-500 text-white"
+          className="w-full bg-primary hover:bg-primary/90 text-white"
           disabled={loading}
         >
           {loading ? 'Creating business account...' : 'Create business account'}
