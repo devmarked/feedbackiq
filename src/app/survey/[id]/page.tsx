@@ -59,7 +59,15 @@ export default function SurveyResponsePage() {
           return
         }
 
-        setSurvey(surveyData)
+        // Transform the businesses array to a single object since we expect one business per survey
+        const transformedSurvey = {
+          ...surveyData,
+          businesses: Array.isArray(surveyData.businesses) && surveyData.businesses.length > 0 
+            ? surveyData.businesses[0] 
+            : surveyData.businesses
+        }
+        
+        setSurvey(transformedSurvey)
       } catch (err) {
         console.error('Error fetching survey:', err)
         setError('Failed to load survey')

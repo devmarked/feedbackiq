@@ -162,7 +162,10 @@ export interface Survey {
   businesses?: {
     name: string;
     logo_url?: string;
-  };
+  } | {
+    name: string;
+    logo_url?: string;
+  }[];
 }
 
 export interface SurveyResponse {

@@ -30,6 +30,14 @@ export function SurveyResponseForm({ survey, onComplete }: SurveyResponseFormPro
   const [contactModalOpen, setContactModalOpen] = useState(true)
   const [contactPref, setContactPref] = useState<ContactPreference | null>(null)
 
+  // Helper function to get business data safely
+  const getBusiness = () => {
+    if (!survey.businesses) return null
+    return Array.isArray(survey.businesses) ? survey.businesses[0] : survey.businesses
+  }
+
+  const business = getBusiness()
+
   // Parse questions from survey data
   const questions: SurveyQuestion[] = survey.survey_data?.questions || []
   const currentQuestion = questions[currentQuestionIndex]
@@ -222,10 +230,10 @@ export function SurveyResponseForm({ survey, onComplete }: SurveyResponseFormPro
                   className="mb-8"
                 >
                   <div className="flex items-center mb-4">
-                    {survey.businesses?.logo_url && (
+                    {business?.logo_url && (
                       <Image 
-                        src={survey.businesses.logo_url} 
-                        alt={survey.businesses.name}
+                        src={business.logo_url} 
+                        alt={business.name}
                         width={48}
                         height={48}
                         className="w-12 h-12 rounded-lg mr-4"

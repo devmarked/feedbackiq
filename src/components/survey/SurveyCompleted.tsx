@@ -12,6 +12,14 @@ interface SurveyCompletedProps {
 }
 
 export function SurveyCompleted({ survey }: SurveyCompletedProps) {
+  // Helper function to get business data safely
+  const getBusiness = () => {
+    if (!survey.businesses) return null
+    return Array.isArray(survey.businesses) ? survey.businesses[0] : survey.businesses
+  }
+
+  const business = getBusiness()
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -60,7 +68,7 @@ export function SurveyCompleted({ survey }: SurveyCompletedProps) {
         </motion.div>
 
         {/* Business Info */}
-        {survey.businesses && (
+        {business && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -68,17 +76,17 @@ export function SurveyCompleted({ survey }: SurveyCompletedProps) {
             className="bg-gray-50 rounded-xl p-6"
           >
             <div className="flex items-center justify-center space-x-4">
-              {survey.businesses.logo_url && (
+              {business.logo_url && (
                 <Image 
-                  src={survey.businesses.logo_url} 
-                  alt={survey.businesses.name}
+                  src={business.logo_url} 
+                  alt={business.name}
                   width={48}
                   height={48}
                   className="w-12 h-12 rounded-lg"
                 />
               )}
               <div className="text-center">
-                <h3 className="font-semibold text-gray-900">{survey.businesses.name}</h3>
+                <h3 className="font-semibold text-gray-900">{business.name}</h3>
                 <p className="text-sm text-gray-600">appreciates your feedback</p>
               </div>
             </div>
