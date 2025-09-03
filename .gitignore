@@ -50,6 +50,7 @@ DATABASE_CHAT_SETUP.md
 DOBBY_HELPERS_SETUP.md
 SUPABASE_SETUP.md
 HELPER_HISTORY_FIX.md
+AI_DATA_FORMATTING.md
 
 # Database files and scripts (only root database directory)
 /database/

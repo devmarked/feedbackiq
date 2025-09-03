@@ -188,6 +188,70 @@ export interface SurveyQuestion {
   logic?: any; // Skip logic, branching
 }
 
+// AI Formatted Survey Data Types
+export interface AIFormattedSurveyMetadata {
+  title: string;
+  description: string;
+  target_audience: string;
+  purpose: string;
+  questions: SurveyQuestion[];
+}
+
+export interface AIFormattedSurveyData {
+  survey_metadata: AIFormattedSurveyMetadata;
+  responses: Record<string, any>[];
+}
+
+export interface AIFormattedSurveyResult {
+  success: boolean;
+  data?: AIFormattedSurveyData;
+  error?: string;
+  survey?: Survey;
+  responses?: SurveyResponse[];
+}
+
+// AI Analysis Types
+export interface SurveyTheme {
+  theme: string;
+  frequency: number;
+  sentiment: 'positive' | 'neutral' | 'negative';
+}
+
+export interface SurveyRecommendation {
+  area: string;
+  suggestion: string;
+  impact: 'high' | 'medium' | 'low';
+}
+
+export interface SurveyAnalysis {
+  summary: string;
+  strengths: string[];
+  weaknesses: string[];
+  themes: SurveyTheme[];
+  recommendations: SurveyRecommendation[];
+}
+
+export interface SurveyAnalysisResult {
+  success: boolean;
+  data?: SurveyAnalysis;
+  error?: string;
+}
+
+// AI Insights Database Types
+export interface AIInsight {
+  id: string;
+  survey_id: string;
+  analysis_data: SurveyAnalysis;
+  generated_at: string;
+  created_by: string;
+}
+
+export interface AIInsightCreateData {
+  survey_id: string;
+  analysis_data: SurveyAnalysis;
+  created_by: string;
+}
+
 export interface BusinessRegistrationData {
   businessName: string;
   description?: string;

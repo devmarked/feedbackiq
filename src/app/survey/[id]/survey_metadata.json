@@ -1,0 +1,81 @@
+{
+  "survey_metadata": {
+    "title": "☕ Coffee Shop Customer Satisfaction Survey",
+    "description": "We value your time with us! Your feedback helps us improve our coffee, service, and overall shop experience so we can serve you better.",
+    "target_audience": "Coffee shop customers (regulars and first-time visitors)",
+    "purpose": "Evaluate overall customer satisfaction with coffee, service, ambiance, and pricing to identify strengths and improvement areas.",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "scale": 5,
+        "title": "How satisfied are you with the quality of our coffee and menu items?",
+        "options": ["Very satisfied", "Satisfied", "Neutral", "Unsatisfied", "Very unsatisfied"]
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "scale": 5,
+        "title": "How would you rate our staff’s friendliness and service?",
+        "options": ["Excellent", "Good", "Average", "Needs improvement"]
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "title": "How would you describe the ambiance of our coffee shop (cleanliness, comfort, music, atmosphere)?",
+        "options": ["Excellent", "Good", "Average", "Needs improvement"]
+      },
+      {
+        "id": "q1756866207009",
+        "type": "multiple_choice",
+        "title": "Do you feel our menu offers good value for money?",
+        "options": ["Excellent value", "Good value", "Average", "Poor value"]
+      },
+      {
+        "id": "q1756866232983",
+        "type": "multiple_choice",
+        "title": "How likely are you to return or recommend our coffee shop to others?",
+        "options": ["Definitely will", "Probably will", "Not sure", "Probably won’t", "Definitely won’t"]
+      },
+      {
+        "id": "q1756866250956",
+        "type": "textarea",
+        "title": "What’s one thing we can improve to make your next visit better?"
+      }
+    ]
+  },
+  "responses": [
+    {
+      "q1": "Very satisfied",
+      "q2": "Excellent",
+      "q3": "Excellent",
+      "q1756866207009": "Excellent value",
+      "q1756866232983": "Definitely will",
+      "q1756866250956": "Everything is great, none so far"
+    },
+    {
+      "q1": "Satisfied",
+      "q2": "Good",
+      "q3": "Good",
+      "q1756866207009": "Good value",
+      "q1756866232983": "Probably will",
+      "q1756866250956": "Service could be a bit faster"
+    },
+    {
+      "q1": "Neutral",
+      "q2": "Average",
+      "q3": "Average",
+      "q1756866207009": "Average",
+      "q1756866232983": "Not sure",
+      "q1756866250956": "Music was a bit loud"
+    },
+    {
+      "q1": "Unsatisfied",
+      "q2": "Needs improvement",
+      "q3": "Average",
+      "q1756866207009": "Poor value",
+      "q1756866232983": "Probably won’t",
+      "q1756866250956": "Coffee tasted bitter"
+    }
+  ]
+}
