@@ -12,112 +12,123 @@ interface SurveyAIInsightsProps {
 export function SurveyAIInsights({ analysis }: SurveyAIInsightsProps) {
   const getImpactColor = (impact: 'high' | 'medium' | 'low') => {
     switch (impact) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200'
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
-      case 'low': return 'bg-green-100 text-green-800 border-green-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+      case 'high': return 'bg-red-50 text-red-700 border-red-200'
+      case 'medium': return 'bg-yellow-50 text-yellow-700 border-yellow-200'
+      case 'low': return 'bg-green-50 text-green-700 border-green-200'
+      default: return 'bg-gray-50 text-gray-700 border-gray-200'
     }
   }
 
   const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
     switch (sentiment) {
-      case 'positive': return 'bg-green-100 text-green-800 border-green-200'
-      case 'neutral': return 'bg-blue-100 text-blue-800 border-blue-200'
-      case 'negative': return 'bg-red-100 text-red-800 border-red-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+      case 'positive': return 'bg-green-50 text-green-700 border-green-200'
+      case 'neutral': return 'bg-blue-50 text-blue-700 border-blue-200'
+      case 'negative': return 'bg-red-50 text-red-700 border-red-200'
+      default: return 'bg-gray-50 text-gray-700 border-gray-200'
     }
   }
 
   return (
     <div className="space-y-6">
-      {/* Summary */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold">AI Analysis Summary</h3>
-        </div>
-        <p className="text-gray-700 leading-relaxed">{analysis.summary}</p>
-      </Card>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Strengths */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-green-600" />
-            <h3 className="text-lg font-semibold">Strengths</h3>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <TrendingUp className="w-4 h-4 text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900">Strengths</h3>
           </div>
-          <ul className="space-y-2">
+          <div className="space-y-3">
             {analysis.strengths.map((strength, index) => (
-              <li key={index} className="flex items-start gap-2">
+              <div key={index} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
                 <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
-                <span className="text-gray-700">{strength}</span>
-              </li>
+                <span className="text-gray-800 text-sm leading-relaxed">{strength}</span>
+              </div>
             ))}
-          </ul>
-        </Card>
+          </div>
+        </div>
 
         {/* Weaknesses */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <TrendingDown className="w-5 h-5 text-red-600" />
-            <h3 className="text-lg font-semibold">Areas for Improvement</h3>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-orange-100 rounded-lg">
+              <TrendingDown className="w-4 h-4 text-orange-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900">Areas for Improvement</h3>
           </div>
-          <ul className="space-y-2">
+          <div className="space-y-3">
             {analysis.weaknesses.map((weakness, index) => (
-              <li key={index} className="flex items-start gap-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0" />
-                <span className="text-gray-700">{weakness}</span>
-              </li>
+              <div key={index} className="flex items-start gap-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0" />
+                <span className="text-gray-800 text-sm leading-relaxed">{weakness}</span>
+              </div>
             ))}
-          </ul>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Themes */}
       {analysis.themes && analysis.themes.length > 0 && (
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Target className="w-5 h-5 text-purple-600" />
-            <h3 className="text-lg font-semibold">Key Themes</h3>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Target className="w-4 h-4 text-purple-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900">Key Themes</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {analysis.themes.map((theme, index) => (
-              <div key={index} className="p-4 border rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-gray-900">{theme.theme}</h4>
-                  <Badge className={getSentimentColor(theme.sentiment)}>
-                    {theme.sentiment}
-                  </Badge>
+            {analysis.themes
+              .sort((a, b) => {
+                // Sort by sentiment: positive → neutral → negative
+                const sentimentOrder = { positive: 0, neutral: 1, negative: 2 };
+                return sentimentOrder[a.sentiment] - sentimentOrder[b.sentiment];
+              })
+              .map((theme, index) => (
+                <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-900 text-sm">{theme.theme}</h4>
+                    <Badge className={`text-xs ${getSentimentColor(theme.sentiment)}`}>
+                      {theme.sentiment}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-gray-600">
+                    Mentioned {theme.frequency} time{theme.frequency !== 1 ? 's' : ''}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-600">
-                  Mentioned {theme.frequency} time{theme.frequency !== 1 ? 's' : ''}
-                </p>
-              </div>
-            ))}
+              ))}
           </div>
-        </Card>
+        </div>
       )}
 
       {/* Recommendations */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Lightbulb className="w-5 h-5 text-yellow-600" />
-          <h3 className="text-lg font-semibold">Recommendations</h3>
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-100 rounded-lg">
+            <Lightbulb className="w-4 h-4 text-blue-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">Recommendations</h3>
         </div>
-        <div className="space-y-4">
-          {analysis.recommendations.map((recommendation, index) => (
-            <div key={index} className="p-4 border rounded-lg">
-              <div className="flex items-start justify-between mb-2">
-                <h4 className="font-medium text-gray-900">{recommendation.area}</h4>
-                <Badge className={getImpactColor(recommendation.impact)}>
-                  {recommendation.impact} impact
-                </Badge>
+        <div className="space-y-3">
+          {analysis.recommendations
+            .sort((a, b) => {
+              // Sort by impact: high → medium → low
+              const impactOrder = { high: 0, medium: 1, low: 2 };
+              return impactOrder[a.impact] - impactOrder[b.impact];
+            })
+            .map((recommendation, index) => (
+              <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-medium text-gray-900 text-sm">{recommendation.area}</h4>
+                  <Badge className={`text-xs ${getImpactColor(recommendation.impact)}`}>
+                    {recommendation.impact} impact
+                  </Badge>
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed">{recommendation.suggestion}</p>
               </div>
-              <p className="text-gray-700">{recommendation.suggestion}</p>
-            </div>
-          ))}
+            ))}
         </div>
-      </Card>
+      </div>
     </div>
   )
 }

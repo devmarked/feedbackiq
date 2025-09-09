@@ -18,6 +18,7 @@ import {
 import { SurveyQuestion, Survey, SurveyTemplate } from '@/types'
 import { createClient } from '@/lib/supabase/client'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useToast } from '@/contexts/ToastContext'
 import { QuestionEditor } from './QuestionEditor'
 import { SurveyPreview } from './SurveyPreview'
 import { TemplateSelector } from './TemplateSelector'
@@ -32,6 +33,7 @@ interface SurveyBuilderProps {
 export function SurveyBuilder({ businessId, surveyId }: SurveyBuilderProps) {
   const router = useRouter()
   const supabase = createClient()
+  const { showSuccess, showError, showWarning } = useToast()
   
   const [survey, setSurvey] = useState<Partial<Survey>>({
     title: '',
@@ -140,12 +142,12 @@ export function SurveyBuilder({ businessId, surveyId }: SurveyBuilderProps) {
 
   const saveSurvey = async (status: 'draft' | 'active' = 'draft') => {
     if (!survey.title?.trim()) {
-      alert('Please enter a survey title')
+      showWarning('Survey Title Required', 'Please enter a survey title to continue')
       return
     }
 
     if (questions.length === 0) {
-      alert('Please add at least one question')
+      showWarning('Questions Required', 'Please add at least one question to your survey')
       return
     }
 
@@ -171,6 +173,13 @@ export function SurveyBuilder({ businessId, surveyId }: SurveyBuilderProps) {
           .eq('id', surveyId)
 
         if (error) throw error
+
+        if (status === 'active') {
+          showSuccess('Survey Published!', 'Your survey is now live and ready to collect responses')
+          router.push('/business/surveys')
+        } else {
+          showSuccess('Draft Saved', 'Your survey has been saved as a draft')
+        }
       } else {
         // Create new survey
         const { data, error } = await supabase
@@ -184,20 +193,19 @@ export function SurveyBuilder({ businessId, surveyId }: SurveyBuilderProps) {
 
         if (error) throw error
         
+        // Show success message before redirect
+        if (status === 'active') {
+          showSuccess('Survey Published!', 'Your survey is now live and ready to collect responses')
+        } else {
+          showSuccess('Draft Saved', 'Your survey has been saved as a draft')
+        }
+        
         // Redirect to edit page for the new survey
         router.push(`/business/surveys/${data.id}/edit`)
-        return
-      }
-
-      if (status === 'active') {
-        alert('Survey published successfully!')
-        router.push('/business/surveys')
-      } else {
-        alert('Survey saved as draft!')
       }
     } catch (error) {
       console.error('Error saving survey:', error)
-      alert('Failed to save survey. Please try again.')
+      showError('Save Failed', 'Failed to save survey. Please try again.')
     } finally {
       setSaving(false)
       setPublishing(false)

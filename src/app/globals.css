@@ -185,3 +185,12 @@
   overflow: hidden;
 }
 
+/* Force toast description text to be black */
+[data-sonner-toast] [data-description] {
+  color: black !important;
+}
+
+[data-sonner-toast] p {
+  color: black !important;
+}
+

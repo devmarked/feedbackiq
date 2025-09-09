@@ -90,7 +90,6 @@ export default function SurveysPage() {
                        }}
                   />
                   <div className="relative z-10 flex items-center">
-                    <Sparkles className="w-5 h-5 mr-2" />
                     Create a survey
                   </div>
                 </Button>

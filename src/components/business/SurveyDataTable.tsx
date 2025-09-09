@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Survey } from "@/types"
 import { createClient } from "@/lib/supabase/client"
+import { useToast } from "@/contexts/ToastContext"
 import Link from "next/link"
 import { ShareSurveyModal } from "./ShareSurveyModal"
 
@@ -76,7 +77,7 @@ const formatDate = (dateString: string) => {
 }
 
 // Delete survey function
-const deleteSurvey = async (surveyId: string, onSuccess?: () => void) => {
+const deleteSurvey = async (surveyId: string, surveyTitle: string, onSuccess?: () => void, onError?: () => void) => {
   try {
     const supabase = createClient()
     const { error } = await supabase
@@ -86,6 +87,9 @@ const deleteSurvey = async (surveyId: string, onSuccess?: () => void) => {
 
     if (error) {
       console.error('Error deleting survey:', error)
+      if (onError) {
+        onError()
+      }
       return false
     }
 
@@ -95,6 +99,9 @@ const deleteSurvey = async (surveyId: string, onSuccess?: () => void) => {
     return true
   } catch (error) {
     console.error('Error deleting survey:', error)
+    if (onError) {
+      onError()
+    }
     return false
   }
 }
@@ -108,35 +115,47 @@ interface ActionCellProps {
 const ActionCell: React.FC<ActionCellProps> = ({ survey, onSurveyDeleted }) => {
   const [isDeleting, setIsDeleting] = React.useState(false)
   const [showShareModal, setShowShareModal] = React.useState(false)
+  const { showSuccess, showError } = useToast()
 
   const handleDelete = async () => {
     setIsDeleting(true)
-    const success = await deleteSurvey(survey.id, () => {
-      // Call the refresh callback if provided
-      if (onSurveyDeleted) {
-        onSurveyDeleted()
+    const success = await deleteSurvey(
+      survey.id, 
+      survey.title,
+      () => {
+        // Success callback
+        showSuccess('Survey Deleted', `"${survey.title}" has been successfully deleted`)
+        if (onSurveyDeleted) {
+          onSurveyDeleted()
+        }
+      },
+      () => {
+        // Error callback
+        showError('Delete Failed', `Failed to delete "${survey.title}". Please try again.`)
       }
-    })
+    )
     setIsDeleting(false)
   }
 
   return (
     <div className="flex items-center space-x-2">
-      {survey.status === 'active' && (
-        <Link href={`/survey/${survey.id}`}>
-          <Button variant="outline" size="sm">
-            <Eye className="w-4 h-4 mr-1" />
-            View
-          </Button>
-        </Link>
-      )}
-      
       <Link href={`/business/surveys/${survey.id}/edit`}>
         <Button variant="outline" size="sm">
           <Edit3 className="w-4 h-4 mr-1" />
           Edit
         </Button>
       </Link>
+      
+      {survey.status === 'active' && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowShareModal(true)}
+        >
+          <Share2 className="w-4 h-4 mr-1" />
+          Share
+        </Button>
+      )}
       
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -147,21 +166,18 @@ const ActionCell: React.FC<ActionCellProps> = ({ survey, onSurveyDeleted }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(survey.id)}
-          >
-            Copy survey ID
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           {survey.status === 'active' && (
-            <DropdownMenuItem onClick={() => setShowShareModal(true)}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Share survey
-            </DropdownMenuItem>
+            <Link href={`/survey/${survey.id}`}>
+              <DropdownMenuItem>
+                <Eye className="w-4 h-4 mr-2" />
+                View Survey
+              </DropdownMenuItem>
+            </Link>
           )}
           <Link href={`/business/surveys/${survey.id}/responses`}>
             <DropdownMenuItem>
-              View responses
+              <Users className="w-4 h-4 mr-2" />
+              View Responses
             </DropdownMenuItem>
           </Link>
           <AlertDialog>
@@ -171,7 +187,7 @@ const ActionCell: React.FC<ActionCellProps> = ({ survey, onSurveyDeleted }) => {
                 onSelect={(e) => e.preventDefault()}
               >
                 <Trash2 className="w-4 h-4 mr-2" />
-                Delete survey
+                Delete Survey
               </DropdownMenuItem>
             </AlertDialogTrigger>
             <AlertDialogContent>

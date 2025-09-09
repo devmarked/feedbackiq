@@ -117,7 +117,7 @@ export function ShareSurveyModal({ survey, isOpen, onClose }: ShareSurveyModalPr
                 ref={qrRef}
                 value={surveyUrl}
                 size={180}
-                logoImage="/images/dobby.png"
+                logoImage="/images/logo-qr.png"
                 logoWidth={35}
                 logoHeight={35}
                 logoOpacity={0.9}
@@ -135,7 +135,7 @@ export function ShareSurveyModal({ survey, isOpen, onClose }: ShareSurveyModalPr
               <QRCode
                 value={surveyUrl}
                 size={720}
-                logoImage="/images/dobby.png"
+                logoImage="/images/logo-qr.png"
                 logoWidth={144}
                 logoHeight={144}
                 logoOpacity={0.9}

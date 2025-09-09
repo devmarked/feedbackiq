@@ -13,11 +13,9 @@ import {
   Lightbulb, 
   Target, 
   Calendar, 
-  User, 
   BarChart3,
   CheckCircle,
   AlertTriangle,
-  ArrowRight,
   Download,
   X
 } from 'lucide-react'
@@ -32,30 +30,30 @@ interface AIInsightsModalProps {
 export function AIInsightsModal({ isOpen, onClose, analysis, savedInsight }: AIInsightsModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto p-0">
-        {/* Header with gradient background */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white p-6 rounded-t-lg">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-0">
+        {/* Clean Header */}
+        <div className="bg-white border-b border-gray-200 px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                <BarChart3 className="w-6 h-6" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <BarChart3 className="w-6 h-6 text-blue-600" />
               </div>
               <div>
-                <DialogTitle className="text-2xl font-bold text-white">
+                <DialogTitle className="text-2xl font-semibold text-gray-900">
                   AI Survey Insights
                 </DialogTitle>
-                <p className="text-blue-100 text-sm mt-1">
+                <p className="text-gray-600 text-base mt-1">
                   Comprehensive analysis powered by artificial intelligence
                 </p>
               </div>
             </div>
             {savedInsight && (
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm font-medium">
+              <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-2">
+                <Calendar className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-600">
                   {new Date(savedInsight.generated_at).toLocaleDateString('en-US', {
                     year: 'numeric',
-                    month: 'long',
+                    month: 'short',
                     day: 'numeric',
                     hour: '2-digit',
                     minute: '2-digit'
@@ -66,21 +64,21 @@ export function AIInsightsModal({ isOpen, onClose, analysis, savedInsight }: AII
           </div>
         </div>
 
-        <div className="p-6 space-y-8">
+        <div className="px-8 py-6 space-y-8">
           {/* Executive Summary */}
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-slate-50 to-blue-50">
-            <div className="p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl">
-                  <Sparkles className="w-6 h-6 text-white" />
+          <Card className="border border-gray-200 shadow-sm">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Sparkles className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Executive Summary</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Executive Summary</h3>
                   <p className="text-gray-600 text-sm">Key findings and overall assessment</p>
                 </div>
               </div>
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-                <p className="text-gray-800 leading-relaxed text-lg font-medium">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <p className="text-gray-800 leading-relaxed text-base">
                   {analysis.summary}
                 </p>
               </div>
@@ -90,66 +88,66 @@ export function AIInsightsModal({ isOpen, onClose, analysis, savedInsight }: AII
           {/* Key Metrics Dashboard */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Strengths Card */}
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-green-50 to-emerald-50 hover:shadow-xl transition-all duration-300">
-              <div className="p-6 text-center">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
-                    <CheckCircle className="w-6 h-6 text-white" />
+            <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
                   </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-green-800 text-lg">Strengths</h4>
-                    <p className="text-green-600 text-sm">Positive aspects identified</p>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-base">Strengths</h4>
+                    <p className="text-gray-600 text-sm">Positive aspects identified</p>
                   </div>
                 </div>
-                <div className="text-4xl font-bold text-green-600 mb-2">{analysis.strengths.length}</div>
-                <div className="text-sm text-green-700 font-medium">Key Strengths Found</div>
+                <div className="text-3xl font-bold text-green-600 mb-1">{analysis.strengths.length}</div>
+                <div className="text-sm text-gray-600">Key Strengths Found</div>
               </div>
             </Card>
 
             {/* Improvements Card */}
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-orange-50 to-red-50 hover:shadow-xl transition-all duration-300">
-              <div className="p-6 text-center">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl">
-                    <AlertTriangle className="w-6 h-6 text-white" />
+            <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <AlertTriangle className="w-5 h-5 text-orange-600" />
                   </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-orange-800 text-lg">Improvements</h4>
-                    <p className="text-orange-600 text-sm">Areas needing attention</p>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-base">Improvements</h4>
+                    <p className="text-gray-600 text-sm">Areas needing attention</p>
                   </div>
                 </div>
-                <div className="text-4xl font-bold text-orange-600 mb-2">{analysis.weaknesses.length}</div>
-                <div className="text-sm text-orange-700 font-medium">Areas to Address</div>
+                <div className="text-3xl font-bold text-orange-600 mb-1">{analysis.weaknesses.length}</div>
+                <div className="text-sm text-gray-600">Areas to Address</div>
               </div>
             </Card>
 
             {/* Recommendations Card */}
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 hover:shadow-xl transition-all duration-300">
-              <div className="p-6 text-center">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl">
-                    <Lightbulb className="w-6 h-6 text-white" />
+            <Card className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <Lightbulb className="w-5 h-5 text-blue-600" />
                   </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-blue-800 text-lg">Recommendations</h4>
-                    <p className="text-blue-600 text-sm">Actionable next steps</p>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-base">Recommendations</h4>
+                    <p className="text-gray-600 text-sm">Actionable next steps</p>
                   </div>
                 </div>
-                <div className="text-4xl font-bold text-blue-600 mb-2">{analysis.recommendations.length}</div>
-                <div className="text-sm text-blue-700 font-medium">Action Items</div>
+                <div className="text-3xl font-bold text-blue-600 mb-1">{analysis.recommendations.length}</div>
+                <div className="text-sm text-gray-600">Action Items</div>
               </div>
             </Card>
           </div>
 
           {/* Detailed Analysis Section */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border border-gray-200 shadow-sm">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
-                  <Target className="w-6 h-6 text-white" />
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <Target className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Detailed Analysis</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Detailed Analysis</h3>
                   <p className="text-gray-600 text-sm">In-depth insights and recommendations</p>
                 </div>
               </div>
@@ -167,7 +165,7 @@ export function AIInsightsModal({ isOpen, onClose, analysis, savedInsight }: AII
               <Button 
                 variant="outline" 
                 onClick={onClose}
-                className="px-6 py-2 border-gray-300 hover:bg-gray-50"
+                className="px-6 py-2"
               >
                 <X className="w-4 h-4 mr-2" />
                 Close
@@ -177,7 +175,7 @@ export function AIInsightsModal({ isOpen, onClose, analysis, savedInsight }: AII
                   // TODO: Implement export functionality
                   console.log('Export insights:', analysis)
                 }}
-                className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export Insights

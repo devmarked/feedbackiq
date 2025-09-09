@@ -4,8 +4,10 @@ import './globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { ProfileProvider } from '@/contexts/ProfileContext'
 import { BusinessProvider } from '@/contexts/BusinessContext'
+import { ToastProvider } from '@/contexts/ToastContext'
 import { AppInitializer } from '@/components/AppInitializer'
 import { ConditionalLayout } from '@/components/ConditionalLayout'
+import { Toaster } from '@/components/ui/sonner'
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -29,11 +31,19 @@ export default function RootLayout({
         <AuthProvider>
           <ProfileProvider>
             <BusinessProvider>
-              <AppInitializer>
-                <ConditionalLayout>
-                  {children}
-                </ConditionalLayout>
-              </AppInitializer>
+              <ToastProvider>
+                <AppInitializer>
+                  <ConditionalLayout>
+                    {children}
+                  </ConditionalLayout>
+                </AppInitializer>
+                <Toaster 
+                  position="top-center"
+                  expand={true}
+                  closeButton={false}
+                  duration={4000}
+                />
+              </ToastProvider>
             </BusinessProvider>
           </ProfileProvider>
         </AuthProvider>
